@@ -1,12 +1,14 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+
 import { ThemeProvider } from 'styled-components/native';
 
 import AppLoading from 'expo-app-loading';
-import { StyleSheet, Text, View } from 'react-native';
-import { CarDetails } from './src/screens/CarDetails';
 
 import theme from './src/screens/styles/theme';
+
+import { Routes } from './src/routes';
 
 import {
   useFonts,
@@ -34,7 +36,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <CarDetails />
+      <Routes />
     </ThemeProvider>
   );
 

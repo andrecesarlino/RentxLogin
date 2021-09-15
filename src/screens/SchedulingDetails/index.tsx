@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+    Feather
+} from '@expo/vector-icons';
+
 import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -22,13 +26,25 @@ import {
  Rent,
  Period,
  Price,
- About,
  Acessories,
+ RentalPeriod,
+ CalendarIcon,
+ DateInfo,
+ DateTitle,
+ DateValue,
+ RentalPrice,
+ RentalPriceLabel,
+ RentalPriceDetails,
+ RentalPriceQuota,
+ RentalPriceTotal,
  Footer
 } from './styles';
 import { Button } from '../../components/Button';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
 
-export function CarDetails(){
+export function SchedulingDetails(){
+    const theme = useTheme();
 return (
     <Container>
         <Header>
@@ -59,14 +75,47 @@ return (
                 <Accessory name="Auto" icon={exchangeSvg}/>                
                 <Accessory name="Gasolina" icon={gasolineSvg}/>
                 <Accessory name="2 pessoas" icon={peopleSvg}/>
-             </Acessories>
+            </Acessories>
 
-             <About>
-                Este é automóvel desportivo. Surgiu do lendário touro
-                de lide indultado na praça Real Maestranza de Sevilla.
-                É um belíssimo carro para quem gosta de acelerar.
-            </About>  
+            <RentalPeriod>
 
+
+                <CalendarIcon>
+                    <Feather 
+                        name="calendar"
+                        size={RFValue(24)}
+                        color={theme.colors.shape}
+                    />
+                </CalendarIcon>
+            
+            <DateInfo>
+                <DateTitle>DE</DateTitle>
+                <DateValue>18/06/2021</DateValue>
+            </DateInfo>
+            <Feather 
+                name="chevron-right"
+                size={RFValue(10)}
+                color={theme.colors.text}
+            />
+            
+            <DateInfo>
+                <DateTitle>ATÉ</DateTitle>
+                <DateValue>23/06/2021</DateValue>
+            </DateInfo>
+            <Feather 
+                name="chevron-right"
+                size={RFValue(10)}
+                color={theme.colors.text}
+            />
+            </RentalPeriod>
+
+            <RentalPrice>
+                <RentalPriceLabel>TOTAL</RentalPriceLabel>
+                <RentalPriceDetails>
+                    <RentalPriceQuota>R$ 580 x3 diárias</RentalPriceQuota>
+                    <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+                </RentalPriceDetails>
+            </RentalPrice>
          </Content>
 
          <Footer>
