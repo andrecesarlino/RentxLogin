@@ -1,27 +1,48 @@
 import React from 'react';
 import {Feather} from '@expo/vector-icons';
 
-import { Calendar as CustomCalendar,
-LocaleConfig } from 'react-native-calendars';
+import {generateInterval} from './generateInterval';
+
+import { 
+    Calendar as CustomCalendar,
+    LocaleConfig,
+    DateCallbackHandler
+} from 'react-native-calendars';
 
 import { useTheme } from 'styled-components';
-import { Inter_100Thin } from '@expo-google-fonts/inter';
 
-LocaleConfig.locales['pt-br'] = {
-    monthNames: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
-    monthNamesShort: ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],
-    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-    dayNamesShort: ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'],
-    today: 'Hoje'
-}
+import {ptBR} from './localeConfig';
+
+LocaleConfig.locales['pt-br'] = ptBR;
 LocaleConfig.defaultLocale = 'pt-br';
 
-export function Calendar(){
+interface DayProps {
+    dateString: string;
+    day: number;
+    month: number;
+    timestamp: number;
+    year: number;
+  }
+  
+  interface MarkedDateProps {
+    [date: string]: {
+      color: string;
+      textColor: string;
+      disabled?: boolean;
+      disableTouchEvent?: boolean;
+    };
+  }
+  
+  interface CalendarProps {
+    markedDates: MarkedDateProps;
+    onDayPress: DateCallbackHandler;
+  }
+
+function Calendar({markedDates, onDayPress}: CalendarProps){
     const theme = useTheme();
     return (
     <CustomCalendar 
-        renderArrow={
+        renderArrow={  
         (direction) => 
         <Feather 
             size={24}
@@ -51,8 +72,17 @@ export function Calendar(){
         }}
 
         firstDay={1}
-
         minDate={new Date()}
+        markingType="period"
+        markedDates={markedDates}
+        onDayPress={onDayPress}
     />
     );
+}
+
+export {
+    Calendar,
+    MarkedDateProps,
+    DayProps,
+    generateInterval
 }

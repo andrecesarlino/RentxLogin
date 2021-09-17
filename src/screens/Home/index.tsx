@@ -6,7 +6,7 @@ import Logo from '../../assets/logo.svg';
 import {api} from '../../services/api';
 import {CarDTO} from '../../dtos/CarDTO';
 import { Car } from '../../components/Car';
-
+import { Load } from '../../components/Load';
 
 
 import {
@@ -22,18 +22,8 @@ export function Home(){
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
 
-    const carDataOne = {
-        brand: 'AUDI',
-        name: 'RS 5 Coupé',
-        rent: {
-            period: 'Ao dia',
-            price: 120,
-        },
-        thumbnail: 'https://production.autoforce.com/uploads/version/profile_image/3188/model_main_comprar-tiptronic_87272c1ff1.png',
-    }
-
-    function handleCarDetails(){
-        navigation.dispatch(CommonActions.navigate('CarDetails'));
+    function handleCarDetails(car: CarDTO){
+        navigation.dispatch(CommonActions.navigate('CarDetails', { car }));
     }
 
     useEffect(() => {
@@ -69,14 +59,16 @@ return (
                 </TotalCars>
             </HeaderContent>
         </Header>
-
+        {
+        loading ? <Load/> : 
         <CarList
             data={cars}
-            keyExtractor={item => String(item)}
+            keyExtractor={item => item.id}
             renderItem={({item}) => 
-            <Car data={carDataOne} onPress={handleCarDetails}/>
+            <Car data={item} onPress={() => handleCarDetails(item)}/>
         }
         />
+        }
     </Container>
     );
 }

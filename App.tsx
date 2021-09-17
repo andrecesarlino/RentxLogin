@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components/native';
 
 import AppLoading from 'expo-app-loading';
 
-import theme from './src/screens/styles/theme';
+import theme from './src/styles/theme';
 
 import { Routes } from './src/routes';
 

@@ -25,6 +25,8 @@ const {width} = useWindowDimensions();
     function handleConfirm(){
         navigation.dispatch(CommonActions.navigate('Home'));
     }
+    
+
 
 return (
 

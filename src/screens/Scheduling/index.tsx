@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { useTheme } from 'styled-components';
 
 import { Button } from '../../components/Button';
-import { Calendar } from '../../components/Calendar';
+import { 
+    Calendar,
+    DayProps,
+    generateInterval,
+    MarkedDateProps
+} from '../../components/Calendar';
 
 import { BackButton } from '../../components/BackButton';
 
@@ -25,12 +30,30 @@ import {
 
 
 export function Scheduling(){
+    const [lastSelectedDate, setlastSelectedDate] = useState<DayProps>({} as DayProps);
+    const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps);
     const theme = useTheme();
 
     const navigation = useNavigation();
 
     function handleConfirmRental(){
         navigation.dispatch(CommonActions.navigate('SchedulingDetails'));
+    }
+    function handleBack(){
+        navigation.goBack();
+    }
+
+    function handleChangeDate(date: DayProps){
+        let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+        let end = date;
+
+        if(start.timestamp > end.timestamp) {
+            start = end;
+            end = start;
+        }
+        setlastSelectedDate(end);
+        const interval = generateInterval(start, end);
+        setMarkedDates(interval);
     }
 
 return (
@@ -41,7 +64,7 @@ return (
                 translucent
                 backgroundColor="transparent"
             />
-            <BackButton onPress={() => {}} color={theme.colors.shape}/>
+            <BackButton onPress={handleBack} color={theme.colors.shape}/>
             <Title>
                 Escolha uma {'\n'}
                 data de início e {'\n'}
@@ -67,7 +90,11 @@ return (
 
 
         <Content>
-            <Calendar />
+            <Calendar 
+                markedDates={markedDates}
+                onDayPress={handleChangeDate}
+            
+            />
 
         </Content>
 
