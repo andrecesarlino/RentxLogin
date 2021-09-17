@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { useTheme } from 'styled-components';
 
@@ -25,8 +26,14 @@ import {
 
 export function Scheduling(){
     const theme = useTheme();
-return (
 
+    const navigation = useNavigation();
+
+    function handleConfirmRental(){
+        navigation.dispatch(CommonActions.navigate('SchedulingDetails'));
+    }
+
+return (
     <Container>
         <Header>
             <StatusBar 
@@ -65,7 +72,7 @@ return (
         </Content>
 
         <Footer>
-            <Button title="Confirmar" onPress={() => {}}/>
+            <Button title="Confirmar" onPress={handleConfirmRental}/>
         </Footer>
 
     </Container>
