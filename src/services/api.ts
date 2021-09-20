@@ -5,3 +5,6 @@ const api = axios.create({
 });
 
 export {api};
+
+//baseURL: 'http://192.168.0.109:3333',
+//baseURL: 'https://unidavi.edu.br',
